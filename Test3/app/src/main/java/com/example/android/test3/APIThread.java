@@ -33,7 +33,7 @@ public APIThread(ClarifaiClient client) {
         ClarifaiResponse<List<ClarifaiOutput<Prediction>>> response = client.predict(model.id())
                 .withInputs(ClarifaiInput.forImage("https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2018-08/SldlWkSDOg.jpg"))
                 .executeSync();
-        System.out.println(response.get();
+        System.out.println(response.get());
 
 
 

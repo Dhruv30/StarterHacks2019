@@ -37,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new APIThread(client);
         thread.start();
 
-
-
-
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
 
