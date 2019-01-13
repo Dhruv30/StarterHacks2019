@@ -21,6 +21,25 @@ import clarifai2.api.ClarifaiClient;
 
 import clarifai2.api.ClarifaiClient;
 
+final class classification {
+    private String class1;
+    private String name;
+
+    public classification(String class1, String name) {
+        this.class1 = class1;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getClass1() {
+        return class1;
+    }
+}
+
+
 public class CameraActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1111;
 
@@ -103,7 +122,8 @@ public class CameraActivity extends AppCompatActivity {
         return (donateOrReuse.contains(tag));
     }
 
-    public String wasteClassifier(ArrayList<String> tagsList){
+
+    public classification wasteClassifier(ArrayList<String> tagsList){
         // ArrayList<String> majorCategories = new ArrayList<String>({"plastic", "glass", "paper", "food", "electronics"});
         int userRecycled = 0;
         int userComposted = 0;
@@ -143,37 +163,71 @@ public class CameraActivity extends AppCompatActivity {
         // First, check if it is garbage
 
         if (greatestNum <= 1){ // 1 is the threshold
-            return "Garbage";
+            return new classification("Garbage", tagsList.get(0));
         }
 
         // Check if any ties exist
 
         if (numRecycle == numCompost || numRecycle == numElectronics || numRecycle == numDonatable){
-            return "Recycle?? (Not sure)";
+            return new classification("Recyclable?? (unsure)", tagsList.get(0));
         }
 
         if (numCompost == numElectronics || numCompost == numDonatable) {
-            return "Compost?? (Not sure)";
+            return new classification("Compost?? (unsure)", tagsList.get(0));
         }
 
         if (numDonatable == numElectronics) {
-            return "Donate or Reuse";
+            return new classification("Donatable/Reusable", tagsList.get(0));
         }
 
         // Since no ties exist, and the object has not been classified as garbage, there exists a distinct category the object can be classified into
         if (greatestNum == numRecycle) {
             userRecycled ++;
-            return "Recycle";
-        } else if (greatestNum == numCompost) {
-            userComposted ++;
-            return "Compost";
-        } else if (greatestNum == numElectronics) {
-            userElectronics ++;
-            return "Electronic Recycling";
-        } else if (greatestNum == numDonatable) {
-            userDonated ++;
-            return "Donate or Reuse";
+
+            for (String itemName : tagsList){
+                if (recyclables.contains(itemName)){
+                    return new classification("Recyclable", itemName);
+                }
+            }
+
+            return new classification("Recyclable", "Unknown");
+
         }
-        return "Waste"; // default
+
+        else if (greatestNum == numCompost) {
+            userComposted ++;
+
+            for (String itemName : tagsList){
+                if (compost.contains(itemName)){
+                    return new classification("Compost", itemName);
+                }
+            }
+
+            return new classification("Compost", "Unknown");
+
+        }
+
+        else if (greatestNum == numElectronics) {
+            userElectronics ++;
+            for (String itemName : tagsList){
+                if (electronics.contains(itemName)){
+                    return new classification("Electronic Recyclable", itemName);
+                }
+            }
+            return new classification("Electronic Recyclable", "Unknown");
+
+        }
+
+        else if (greatestNum == numDonatable) {
+            userDonated ++;
+            for (String itemName : tagsList){
+                if (donateOrReuse.contains(itemName)){
+                    return new classification("Donate or Reuse", itemName);
+                }
+            }
+            return new classification("Donatable or Reusable", "Unknown");
+
+        }
+        return new classification("Garbage", "Unknown"); // default
     }
 }
