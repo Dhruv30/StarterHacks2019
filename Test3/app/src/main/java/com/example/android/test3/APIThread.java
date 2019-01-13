@@ -39,6 +39,7 @@ final class Classification {
 }
 
 public class APIThread extends Thread {
+
     byte[] newImgByteArray;
     public ClarifaiClient client;
 
@@ -46,6 +47,11 @@ public class APIThread extends Thread {
         client = _client;
         this.newImgByteArray = newImgByteArray;
     }
+    public static int userRecycled = 0;
+    public static int userComposted = 0;
+    public static int userElectronics = 0;
+    public static int userDonated = 0;
+
 
     @Override
     public void run() {
@@ -106,10 +112,6 @@ public class APIThread extends Thread {
 
     public Classification wasteClassifier(ArrayList<String> tagsList){
         // ArrayList<String> majorCategories = new ArrayList<String>({"plastic", "glass", "paper", "food", "electronics"});
-        int userRecycled = 0;
-        int userComposted = 0;
-        int userElectronics = 0;
-        int userDonated = 0;
 
         ArrayList<String> recyclables = new ArrayList<String>( Arrays.asList("plastic", "paper", "glass", "bottle", "aluminum", "cardboard", "boxboard", "healthy", "recycling", "soda", "pop", "can", "beer", "glass items", "wood", "container"));
         ArrayList<String> compost = new ArrayList<String>( Arrays.asList("food", "vegetable", "fruit", "tea bag", "leaf", "banana", "apple", "paper tower", "flower", "plant"));

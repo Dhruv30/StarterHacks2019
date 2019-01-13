@@ -25,7 +25,8 @@
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="@+id/statsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="openCameraActivity"/>
 
 
     <Button
@@ -43,5 +44,6 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="openStatsActivity"/>
 </android.support.constraint.ConstraintLayout>

@@ -21,6 +21,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
         getSupportActionBar().setTitle("SmartR");
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.app_bar);
@@ -28,13 +29,13 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         cameraButton = findViewById(R.id.cameraButton);
         statsButton = findViewById(R.id.standard);
-
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCameraActivity();
-            }
-        });
+//
+//        cameraButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openCameraActivity();
+//            }
+//        });
 
 //        statsButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -44,16 +45,18 @@ public class HomeScreenActivity extends AppCompatActivity {
 //        });
     }
 
-    public void openCameraActivity() {
+    public void openCameraActivity(View view) {
         Intent intent = new Intent(this, CameraActivity.class); /*Replace CAMACTIVITY
                                                           with actual camera/main activity once created*/
         startActivity(intent);
+        this.finish();
     }
 
-//    public void openStatsActivity() {
-//        Intent intent = new Intent(this, STATSACTIVITY.class); /*Replace STATSACTIVITY
-//                                                           with actual stats activity once created*/
-//        startActivity(intent);
-//    }
+    public void openStatsActivity(View view) {
+        Intent intent = new Intent(this, StatsActivity.class); /*Replace STATSACTIVITY
+                                                           with actual stats activity once created*/
+        startActivity(intent);
+        this.finish();
+    }
 
 }
