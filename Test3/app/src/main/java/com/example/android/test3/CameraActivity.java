@@ -46,14 +46,9 @@ public class CameraActivity extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] newImgByteArray = stream.toByteArray();
-<<<<<<< HEAD
-||||||| merged common ancestors
-=======
 
                 Thread apiThread = new APIThread(newImgByteArray);
                 apiThread.start();
-//                imgByteArray = newImgByteArray;
->>>>>>> 5dbb1546d1b280d4d156260effa37d58e3332caf
 
                 // convert byte array to Bitmpap
                 Bitmap bitmap = BitmapFactory.decodeByteArray(newImgByteArray, 0,
