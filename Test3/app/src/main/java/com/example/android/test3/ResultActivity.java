@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
     public static Classification result;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +19,12 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("SmartR");
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.app_bar);
-        System.out.println("KEY CODE RECEIVED: "+ this.result.getName() + " , " + this.result.getClassN());
+        System.out.println("KEY CODE RECEIVED: "+ result.getName() + " , " + result.getClassN());
+
+        TextView resultText = (TextView) findViewById(R.id.result1);
+        TextView itemText = (TextView) findViewById(R.id.item);
+        resultText.setText(result.getClassN());
+        itemText.setText(result.getName());
     }
 
     public void openHome(View view){

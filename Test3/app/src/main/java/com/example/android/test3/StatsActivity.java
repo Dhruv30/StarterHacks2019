@@ -1,8 +1,10 @@
 package com.example.android.test3;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class StatsActivity extends AppCompatActivity {
@@ -21,9 +23,15 @@ public class StatsActivity extends AppCompatActivity {
         TextView text3 = (TextView) findViewById(R.id.statsText3);
         TextView text4 = (TextView) findViewById(R.id.statsText4);
 
-        text1.setText("You have recycled " + APIThread.userRecycled + " items");
-        text2.setText("You have composted " + APIThread.userComposted + " items");
-        text3.setText("You have recycled " + APIThread.userElectronics + " electronics");
-        text4.setText("You have donated " + APIThread.userDonated + " items");
+        text1.setText("You have recycled " + CameraActivity.totalRecycle + " items");
+        text2.setText("You have composted " + CameraActivity.totalCompost + " items");
+        text3.setText("You have recycled " + CameraActivity.totalElectronics + " electronics");
+        text4.setText("You have donated " + CameraActivity.totalDonatable + " items");
+    }
+
+    public void openHome(View view){
+        Intent intent = new Intent(this, HomeScreenActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }
