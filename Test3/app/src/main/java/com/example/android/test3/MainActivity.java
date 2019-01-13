@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Initialized");
         setSupportActionBar(toolbar);
 
-
-
         Thread thread = new APIThread(client);
         thread.start();
 
