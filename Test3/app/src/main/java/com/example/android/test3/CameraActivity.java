@@ -1,6 +1,7 @@
 package com.example.android.test3;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,15 +13,26 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+
+import clarifai2.api.ClarifaiClient;
 
 public class CameraActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1111;
     ImageView mImageView;
+
+    public ClarifaiClient client;
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-         mImageView = findViewById(R.id.add_img);
+        mImageView = findViewById(R.id.add_img);
+
+        context = this; // Set context for API thread to access
+        Thread thread = new APIThread(client);
+        thread.start();
 
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +60,20 @@ public class CameraActivity extends AppCompatActivity {
 
                 mImageView.setImageBitmap(bitmap);
             }
+        }
+    }
+
+    public static Context getLastSetContext() {
+        return context;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ArrayList<String> data = intent.getStringArrayListExtra("data"); // you will get "data_from_thread"
+
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println("TEST RESPONSE " + data.get(i));
         }
     }
 }

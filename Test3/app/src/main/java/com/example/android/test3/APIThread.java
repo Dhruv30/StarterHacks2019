@@ -1,5 +1,9 @@
 package com.example.android.test3;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Camera;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,6 @@ public APIThread(ClarifaiClient client) {
     this.client = client;
 }
 
-
     @Override
     public void run() {
 
@@ -35,17 +38,24 @@ public APIThread(ClarifaiClient client) {
         ClarifaiResponse<List<ClarifaiOutput<Prediction>>> response = client.predict(model.id())
                 .withInputs(ClarifaiInput.forImage("https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2018-08/SldlWkSDOg.jpg"))
                 .executeSync();
-        System.out.println(response.get());
+        System.out.println(response.get().toString());
 
         ArrayList<Concept> conceptList = new ArrayList<Concept>();
+        ArrayList<String> namesList = new ArrayList<String>();
         List<ClarifaiOutput<Prediction>> outputPredictionsList = response.get();
 
-        for (int i = 0; i <  outputPredictionsList.size();i++ ) {
+        for (int i = 0; i < outputPredictionsList.size(); i++ ) {
             for (Prediction prediction : outputPredictionsList.get(i).data()) {
                 conceptList.add(prediction.asConcept());
-                System.out.println(conceptList.get(i).name());
+                namesList.add(prediction.asConcept().name());
             }
         }
 
+        Context context = CameraActivity.getLastSetContext(); // Retrieve context from Main
+
+        Intent i = new Intent(context, CameraActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        i.putStringArrayListExtra("data", namesList);
+        context.startActivity(i);
     }
 }
