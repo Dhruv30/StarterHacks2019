@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -18,8 +19,11 @@ import java.util.Arrays;
 
 import clarifai2.api.ClarifaiClient;
 
+import clarifai2.api.ClarifaiClient;
+
 public class CameraActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1111;
+
     ImageView mImageView;
 
     public ClarifaiClient client;
@@ -32,10 +36,10 @@ public class CameraActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.add_img);
 
         context = this; // Set context for API thread to access
-        Thread thread = new APIThread(client);
-        thread.start();
 
-        mImageView.setOnClickListener(new View.OnClickListener() {
+        ImageView button = findViewById(R.id.add_img);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -53,7 +57,9 @@ public class CameraActivity extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] newImgByteArray = stream.toByteArray();
-//                imgByteArray = newImgByteArray;
+
+                Thread apiThread = new APIThread(newImgByteArray, client);
+                apiThread.start();
 
                 // convert byte array to Bitmpap
                 Bitmap bitmap = BitmapFactory.decodeByteArray(newImgByteArray, 0,
