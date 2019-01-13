@@ -49,7 +49,7 @@ public class CameraActivity extends AppCompatActivity {
                 apiThread.start();
 //                imgByteArray = newImgByteArray;
 
-                // convert byte array to Bitmpa
+                // convert byte array to Bitmpap
                 Bitmap bitmap = BitmapFactory.decodeByteArray(newImgByteArray, 0,
                         newImgByteArray.length);
 

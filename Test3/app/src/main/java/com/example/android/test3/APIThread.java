@@ -1,5 +1,6 @@
 package com.example.android.test3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import clarifai2.api.ClarifaiBuilder;
@@ -9,6 +10,7 @@ import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.ConceptModel;
 import clarifai2.dto.model.ModelVersion;
 import clarifai2.dto.model.output.ClarifaiOutput;
+import clarifai2.dto.prediction.Concept;
 import clarifai2.dto.prediction.Prediction;
 import okhttp3.OkHttpClient;
 
@@ -37,7 +39,15 @@ public APIThread(byte[] newImgByteArray) {
 
         System.out.println(response.get().toString());
 
+        ArrayList<Concept> conceptList = new ArrayList<Concept>();
+        List<ClarifaiOutput<Prediction>> outputPredictionsList = response.get();
 
+        for (int i = 0; i <  outputPredictionsList.size();i++ ) {
+            for (Prediction prediction : outputPredictionsList.get(i).data()) {
+                conceptList.add(prediction.asConcept());
+                System.out.println(conceptList.get(i).name());
+            }
+        }
 
     }
 }
