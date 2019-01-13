@@ -1,0 +1,3 @@
+font used for logo: fredoka one
+font used for context: kollektif
+green background: #c9d439
