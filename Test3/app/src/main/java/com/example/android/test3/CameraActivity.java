@@ -1,6 +1,7 @@
 package com.example.android.test3;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import clarifai2.api.ClarifaiClient;
 
 public class CameraActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1111;
+    Dialog myDialog;
 
     ImageView mImageView;
 
@@ -39,14 +41,11 @@ public class CameraActivity extends AppCompatActivity {
 
         ImageView button = findViewById(R.id.add_img);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent,
                         CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            }
-        });
+
+
     }
 
     @Override
@@ -176,4 +175,8 @@ public class CameraActivity extends AppCompatActivity {
         }
         return "Waste"; // default
     }
+
+    /*public void showPopup(){
+        myDialog.set
+    }*/
 }

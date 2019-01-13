@@ -3,6 +3,7 @@ package com.example.android.test3;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Camera;
+import android.os.Looper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,9 @@ public class APIThread extends Thread {
 
     @Override
     public void run() {
+        Looper.prepare();
 
-        client = new ClarifaiBuilder("b2c657222b8e4b1ea83e97e3196a14ec")
+        client = new ClarifaiBuilder("0624bdba1a464be5947f261a50158a0b")
                 .client(new OkHttpClient())
                 .buildSync();
 
@@ -41,7 +43,7 @@ public class APIThread extends Thread {
                 .withInputs(ClarifaiInput.forImage(newImgByteArray))
                 .executeSync();
 
-        System.out.println(response.get().toString());
+//        System.out.println(response.get().toString());
 
         ArrayList<Concept> conceptList = new ArrayList<Concept>();
         ArrayList<String> namesList = new ArrayList<String>();
@@ -54,11 +56,19 @@ public class APIThread extends Thread {
             }
         }
 
-        Context context = CameraActivity.getLastSetContext(); // Retrieve context from Main
-
+         Context context = CameraActivity.getLastSetContext(); // Retrieve context from Main
+     /*
         Intent i = new Intent(context, CameraActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         i.putStringArrayListExtra("data", namesList);
         context.startActivity(i);
+        */
+
+        ;
+
+         ResultActivity.test = "Testing 123";
+         Intent intent = new Intent(context, ResultActivity.class);
+         context.startActivity(intent);
+
     }
 }

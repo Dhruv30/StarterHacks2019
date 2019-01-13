@@ -8,4 +8,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="actionBarBack">#7AA424</color>
     <color name="actionBarText">#202627</color>
+    <color name="white">#fff</color>
 </resources>
