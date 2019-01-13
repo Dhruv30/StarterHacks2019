@@ -76,6 +76,9 @@ public class CameraActivity extends AppCompatActivity {
         for (int i = 0; i < data.size(); i++) {
             System.out.println("TEST RESPONSE " + data.get(i));
         }
+
+        // Call waste classifier function using data passed in
+        System.out.println("RESULT OF CLASSIFICATION " + wasteClassifier(data));
     }
 
     public static boolean isRecyclable(String tag, ArrayList<String> recyclables){
@@ -100,7 +103,7 @@ public class CameraActivity extends AppCompatActivity {
         int userComposted = 0;
         int userElectronics = 0;
         int userDonated = 0;
-
+        
         ArrayList<String> recyclables = new ArrayList<String>( Arrays.asList("plastic", "paper", "glass", "bottle", "aluminum", "cardboard", "boxboard", "healthy", "recycling", "soda", "pop", "can", "beer", "glass items", "wood", "container"));
         ArrayList<String> compost = new ArrayList<String>( Arrays.asList("food", "vegetable", "fruit", "tea bag", "leaf", "banana", "apple", "paper tower", "flower", "plant"));
         ArrayList<String> electronics = new ArrayList<String>( Arrays.asList("battery", "laptop", "phone", "electronic", "technology", "TV", "screen", "fridge", "stove", "appliance", "microwave", "electricity", "internet", "telephone"));
@@ -152,7 +155,6 @@ public class CameraActivity extends AppCompatActivity {
         }
 
         // Since no ties exist, and the object has not been classified as garbage, there exists a distinct category the object can be classified into
-
         if (greatestNum == numRecycle) {
             userRecycled ++;
             return "Recycle";
