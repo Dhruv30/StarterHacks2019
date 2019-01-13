@@ -113,9 +113,9 @@ public class APIThread extends Thread {
     public Classification wasteClassifier(ArrayList<String> tagsList){
         // ArrayList<String> majorCategories = new ArrayList<String>({"plastic", "glass", "paper", "food", "electronics"});
 
-        ArrayList<String> recyclables = new ArrayList<String>( Arrays.asList("plastic", "paper", "glass", "bottle", "aluminum", "cardboard", "boxboard", "healthy", "recycling", "soda", "pop", "can", "beer", "glass items", "wood", "container"));
-        ArrayList<String> compost = new ArrayList<String>( Arrays.asList("food", "vegetable", "fruit", "tea bag", "leaf", "banana", "apple", "paper tower", "flower", "plant"));
-        ArrayList<String> electronics = new ArrayList<String>( Arrays.asList("battery", "laptop", "phone", "electronic", "technology", "TV", "screen", "fridge", "stove", "appliance", "microwave", "electricity", "internet", "telephone"));
+        ArrayList<String> recyclables = new ArrayList<String>( Arrays.asList("bottle", "glass", "glass items", "foil", "recycling", "plastic", "paper", "aluminum", "cardboard", "boxboard", "soda", "pop", "can", "beer", "wood", "container"));
+        ArrayList<String> compost = new ArrayList<String>( Arrays.asList("health", "healthy", "food", "vegetable", "fruit", "tea bag", "leaf", "banana", "apple", "paper tower", "flower", "plant", "breakfast", "delicious"));
+        ArrayList<String> electronics = new ArrayList<String>( Arrays.asList("computer", "display", "battery", "electronic", "electronics", "phone", "telephone", "technology", "keyboard", "wire", "laptop", "TV", "screen", "fridge", "stove", "appliance", "microwave", "electricity", "internet"));
         ArrayList<String> donateOrReuse = new ArrayList<String>( Arrays.asList("luggage", "leather", "fashion", "cloth", "clothes", "clothing", "bag", "jacket", "wear", "fabric", "chair", "furniture", "seat", "jewelry", "hats", "gloves", "mittens", "scarf"));
 
         /*
@@ -142,7 +142,6 @@ public class APIThread extends Thread {
         }
 
         int greatestNum = Math.max(Math.max(numRecycle, numCompost), Math.max(numElectronics, numDonatable));
-
 
         // Since no ties exist, and the object has not been classified as garbage, there exists a distinct category the object can be classified into
         if (numRecycle == greatestNum) {
