@@ -1,5 +1,9 @@
 package com.example.android.test3;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Camera;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +19,13 @@ import clarifai2.dto.prediction.Prediction;
 import okhttp3.OkHttpClient;
 
 public class APIThread extends Thread {
-byte[] newImgByteArray;
+    byte[] newImgByteArray;
     public ClarifaiClient client;
-public APIThread(byte[] newImgByteArray) {
-    this.client = client;
-    this.newImgByteArray = newImgByteArray;
-}
 
+    public APIThread(byte[] newImgByteArray, ClarifaiClient _client) {
+        client = _client;
+        this.newImgByteArray = newImgByteArray;
+    }
 
     @Override
     public void run() {
@@ -40,14 +44,21 @@ public APIThread(byte[] newImgByteArray) {
         System.out.println(response.get().toString());
 
         ArrayList<Concept> conceptList = new ArrayList<Concept>();
+        ArrayList<String> namesList = new ArrayList<String>();
         List<ClarifaiOutput<Prediction>> outputPredictionsList = response.get();
 
-        for (int i = 0; i <  outputPredictionsList.size();i++ ) {
+        for (int i = 0; i < outputPredictionsList.size(); i++ ) {
             for (Prediction prediction : outputPredictionsList.get(i).data()) {
                 conceptList.add(prediction.asConcept());
-                System.out.println(conceptList.get(i).name());
+                namesList.add(prediction.asConcept().name());
             }
         }
 
+        Context context = CameraActivity.getLastSetContext(); // Retrieve context from Main
+
+        Intent i = new Intent(context, CameraActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        i.putStringArrayListExtra("data", namesList);
+        context.startActivity(i);
     }
 }
