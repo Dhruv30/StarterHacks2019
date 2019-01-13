@@ -14,8 +14,12 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
+import clarifai2.api.ClarifaiClient;
+
 public class CameraActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1111;
+
+
     ImageView mImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,14 @@ public class CameraActivity extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] newImgByteArray = stream.toByteArray();
+<<<<<<< HEAD
+||||||| merged common ancestors
+=======
+
+                Thread apiThread = new APIThread(newImgByteArray);
+                apiThread.start();
+//                imgByteArray = newImgByteArray;
+>>>>>>> 5dbb1546d1b280d4d156260effa37d58e3332caf
 
                 // convert byte array to Bitmpap
                 Bitmap bitmap = BitmapFactory.decodeByteArray(newImgByteArray, 0,

@@ -32,8 +32,15 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Initialized");
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
+
+
+        //Thread thread = new APIThread(client);
+        //thread.start();
+=======
         Thread thread = new APIThread(client);
         thread.start();
+>>>>>>> 544cbd99d29fd02837b1c3a4e620a299eb86e0f8
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
