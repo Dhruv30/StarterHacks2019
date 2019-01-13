@@ -13,10 +13,11 @@ import clarifai2.dto.prediction.Prediction;
 import okhttp3.OkHttpClient;
 
 public class APIThread extends Thread {
-ClarifaiClient client;
-
-public APIThread(ClarifaiClient client) {
+byte[] newImgByteArray;
+    public ClarifaiClient client;
+public APIThread(byte[] newImgByteArray) {
     this.client = client;
+    this.newImgByteArray = newImgByteArray;
 }
 
 
@@ -31,8 +32,9 @@ public APIThread(ClarifaiClient client) {
        // ModelVersion modelVersion = model.getVersionByID("the-version").executeSync().get();
 
         ClarifaiResponse<List<ClarifaiOutput<Prediction>>> response = client.predict(model.id())
-                .withInputs(ClarifaiInput.forImage("https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2018-08/SldlWkSDOg.jpg"))
+                .withInputs(ClarifaiInput.forImage(newImgByteArray))
                 .executeSync();
+
         System.out.println(response.get());
 
 
