@@ -31,6 +31,11 @@ public class CameraActivity extends AppCompatActivity {
     public ClarifaiClient client;
     public static Context context;
 
+    public static int totalRecycle;
+    public static int totalCompost;
+    public static int totalElectronics;
+    public static int totalDonatable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

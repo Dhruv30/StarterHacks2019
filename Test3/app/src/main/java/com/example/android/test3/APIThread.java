@@ -20,6 +20,24 @@ import clarifai2.dto.prediction.Concept;
 import clarifai2.dto.prediction.Prediction;
 import okhttp3.OkHttpClient;
 
+final class Classification {
+    private String classN;
+    private String name;
+
+    public Classification(String classN, String name) {
+        this.classN = classN;
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getClassN() {
+        return this.classN;
+    }
+}
+
 public class APIThread extends Thread {
     byte[] newImgByteArray;
     public ClarifaiClient client;
@@ -65,10 +83,9 @@ public class APIThread extends Thread {
         context.startActivity(i);
         */
 
-         ResultActivity.test = wasteClassifier(namesList);
+         ResultActivity.result = wasteClassifier(namesList);
          Intent intent = new Intent(context, ResultActivity.class);
          context.startActivity(intent);
-
     }
 
     public static boolean isRecyclable(String tag, ArrayList<String> recyclables){
@@ -87,8 +104,12 @@ public class APIThread extends Thread {
         return (donateOrReuse.contains(tag));
     }
 
-    public String wasteClassifier(ArrayList<String> tagsList){
+    public Classification wasteClassifier(ArrayList<String> tagsList){
         // ArrayList<String> majorCategories = new ArrayList<String>({"plastic", "glass", "paper", "food", "electronics"});
+        int userRecycled = 0;
+        int userComposted = 0;
+        int userElectronics = 0;
+        int userDonated = 0;
 
         ArrayList<String> recyclables = new ArrayList<String>( Arrays.asList("plastic", "paper", "glass", "bottle", "aluminum", "cardboard", "boxboard", "healthy", "recycling", "soda", "pop", "can", "beer", "glass items", "wood", "container"));
         ArrayList<String> compost = new ArrayList<String>( Arrays.asList("food", "vegetable", "fruit", "tea bag", "leaf", "banana", "apple", "paper tower", "flower", "plant"));
@@ -120,36 +141,55 @@ public class APIThread extends Thread {
 
         int greatestNum = Math.max(Math.max(numRecycle, numCompost), Math.max(numElectronics, numDonatable));
 
-        // First, check if it is garbage
-
-        if (greatestNum <= 1){ // 1 is the threshold
-            return "Garbage";
-        }
-
-        // Check if any ties exist
-
-        if (numRecycle == numCompost || numRecycle == numElectronics || numRecycle == numDonatable){
-            return "Recycle?? (Not sure)";
-        }
-
-        if (numCompost == numElectronics || numCompost == numDonatable) {
-            return "Compost?? (Not sure)";
-        }
-
-        if (numDonatable == numElectronics) {
-            return "Donate or Reuse";
-        }
 
         // Since no ties exist, and the object has not been classified as garbage, there exists a distinct category the object can be classified into
-        if (greatestNum == numRecycle) {
-            return "Recycle";
-        } else if (greatestNum == numCompost) {
-            return "Compost";
-        } else if (greatestNum == numElectronics) {
-            return "Electronic Recycling";
-        } else if (greatestNum == numDonatable) {
-            return "Donate or Reuse";
+        if (numRecycle == greatestNum) {
+            for (String itemName : tagsList){
+                if (recyclables.contains(itemName)){
+                    CameraActivity.totalRecycle++;
+                    return new Classification("Recyclable", itemName);
+                }
+            }
+            CameraActivity.totalRecycle++;
+            return new Classification("Recyclable", "Unknown");
         }
-        return "Waste"; // default
+
+        else if (numCompost == greatestNum) {
+            for (String itemName : tagsList){
+                if (compost.contains(itemName)){
+                    CameraActivity.totalCompost++;
+                    return new Classification("Compost", itemName);
+                }
+            }
+            CameraActivity.totalCompost++;
+            return new Classification("Compost", "Unknown");
+
+        }
+
+        else if (greatestNum == numElectronics) {
+            for (String itemName : tagsList){
+                if (electronics.contains(itemName)){
+                    CameraActivity.totalElectronics++;
+                    return new Classification("Electronic Recyclable", itemName);
+                }
+            }
+            CameraActivity.totalElectronics++;
+            return new Classification("Electronic Recyclable", "Unknown");
+
+        }
+
+        else if (greatestNum == numDonatable) {
+            userDonated ++;
+            for (String itemName : tagsList){
+                if (donateOrReuse.contains(itemName)){
+                    CameraActivity.totalDonatable++;
+                    return new Classification("Donate or Reuse", itemName);
+                }
+            }
+            CameraActivity.totalDonatable++;
+            return new Classification("Donatable or Reusable", "Unknown");
+
+        }
+        return new Classification("Garbage", "Unknown"); // default
     }
 }

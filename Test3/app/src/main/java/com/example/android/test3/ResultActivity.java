@@ -10,7 +10,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
-    public static String test;
+    public static Classification result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("SmartR");
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.app_bar);
-        System.out.println("KEY CODE RECIEVED: "+this.test);
+        System.out.println("KEY CODE RECEIVED: "+ this.result.getName() + " , " + this.result.getClassN());
     }
 
     public void openHome(View view){
