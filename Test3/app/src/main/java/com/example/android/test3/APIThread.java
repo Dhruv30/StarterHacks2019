@@ -35,7 +35,7 @@ public APIThread(byte[] newImgByteArray) {
                 .withInputs(ClarifaiInput.forImage(newImgByteArray))
                 .executeSync();
 
-        System.out.println(response.get());
+        System.out.println(response.get().toString());
 
 
 
