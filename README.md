@@ -14,5 +14,5 @@ Android Studio was our main platform for development. We used Clarifai's Image R
 We expect it to be hard to engage users to use the application in the long term. Therefore we would plan to implement more features that offer incentive for people to use the application. One of these features could include quizzes that reward points, based on items they have disposed of in the past. Also we thought about implementing the Snapchat API so that users can display their score to their friends, and show off that they are being environmentally friendly.
 
 
-#Navigating the Repository 
+# Navigating the Repository 
 The actual implementation is contained within the 'Test3' folder whereas the logo designs are contained within the 'Logos and Designs' folder. For more about our project, refer to https://devpost.com/software/starterhacks2019
