@@ -57,7 +57,7 @@ public class APIThread extends Thread {
     public void run() {
         Looper.prepare();
 
-        client = new ClarifaiBuilder("0624bdba1a464be5947f261a50158a0b")
+        client = new ClarifaiBuilder("cf6ae786bdc7430ab440445e4efae2c9")
                 .client(new OkHttpClient())
                 .buildSync();
 
